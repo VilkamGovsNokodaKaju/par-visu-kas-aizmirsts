@@ -98,9 +98,16 @@
       background: #fff;
       border-radius: clamp(8px, 1vw, 12px);
       position: relative;
-      transition: box-shadow .25s ease, background-color .25s ease, border-color .25s ease, transform .2s ease;
+      transition: box-shadow .75s ease, background-color .75s ease, border-color .75s ease, transform .7s ease;
       overflow: hidden;
     }
+	
+	.panel:hover {
+	box-shadow: 0 6px 24px rgba(0,0,0,.06);
+	background: #fafafa;
+	}
+	
+	
     /* light-up effect */
     .panel.lit {
       background: var(--accent);           /* solid red fill */
@@ -142,7 +149,7 @@
 <body>
   <div class="wrap">
     <div class="search" role="search">
-      <input id="query" type="text" placeholder="Search items…" autocomplete="off"/>
+      <input id="query" type="text" placeholder="Meklēt..." autocomplete="off"/>
     </div>
 
     <div class="map" aria-label="Room map">
@@ -174,13 +181,13 @@
     // Define your inventory: sections → items. Add as many as you like.
     const SECTIONS = {
       A: ["albums", "fotogrāfijas", "apbalvojumi", "rotaļlietas", "vainaga nometne"],
-      B: ["dzērieni", "higēna", "dezuderants", "pudeles", "Lotes komplimentu lapiņas", "Lotes kuponi", "aproces", "matu gumijas", "enģelīts", "Lotes vēstules", "saulesbrilles", "matu sprādzes", "elektrolīti", "atslēgas", "piekariņi"],
-      C: ["mājturība", "arts&crafts", "mērlente", "magnēti", "knaģi", "līmlente", "skočs", "lipekļi", "skrūvgriezis", "knaibles", "rīki", "cirkulis", "aploksnes", "uzlīmes", "līme", "zīmuļi", "flomasteri", "marķieri", "filmiņas", "jaunības radošie darbi / zīmējumi", "mapītes", "folderi", "tāfeles", "atzinības / apbalvojumi / brīvprātīgais d."],
+      B: ["dzērieni", "higēna", "dezuderants", "pudeles", "Lotes zvaigznītes", "Lotes kuponi", "aproces", "matu gumijas", "enģelīts", "Lotes vēstules", "saulesbrilles", "matu sprādzes", "elektrolīti", "atslēgas", "piekariņi"],
+      C: ["mājturība", "arts&crafts", "mērlente", "metrimērs", "magnēti", "knaģi", "līmlente", "skočs", "lipekļi", "skrūvgriezis", "knaibles", "rīki", "cirkulis", "aploksnes", "uzlīmes", "līme", "zīmuļi", "flomasteri", "marķieri", "filmiņas", "jaunības radošie darbi / zīmējumi", "mapītes", "folderi", "tāfeles", "atzinības / apbalvojumi / brīvprātīgais d."],
       D: ["skola", "kalkulators", "lineāli", "penālis"],
       E: ["atmiņas diski", "pirmās vajadzības vadi", "austiņu vads", "marķieri", "dzejoļi", "čeki", "alus korķīši", "maka krājumi/lapiņas/random", "nagu šķēres", "šķēres", "Lotes bitīte", "Lotes kristāli", "deju programmas", "sīknauda"],
       F: ["tukšas kastes", "NERF", "stabilizators", "dabas atradumi", "dzērieni", "boulings", "deju svētku krātuve", "skaidas", "burbuļplēve"],
-      G: ["LEGO", "bugatti/mašīna", "random lietas", "mašīnītes", "VITC", "memorabilia", "avīzes", "kārtis", "aproces", "rotas", "valūtu/naudas kolekcija", "bloknoti/piezīmjblociņi", "VR brilles", "Grafiskā karte", "SMU piemiņa", "tīrīšanas piederumi / salvetes", "trauciņš / zīmuļu turētājs", "alus josta"],
-      H: ["elektronika", "vasaras lasīšana", "foto aparatūra", "mikrofoni", "baterijas", "vadi / lādētāji / adapteri", "powerbank", "peles", "klaviatūras", "rācijas", "samsung pulkstenis", "skrūves (mikrofonam)", "austiņas / audio vadi", "austiņu maciņš", "radio", "velo gaismiņas", "adapteri", "random lietas", "COVID tests", "tenisa bumbiņa", "instrukcijas", "filmiņu iepakojums", "rakstāmmašīnas lentes", "time-lapse taimeris"]
+      G: ["LEGO", "bugatti/mašīna", "dārza atradumi", "random lietas", "rotaļlietas", "mašīnītes", "VITC", "memorabilia", "avīzes", "kārtis", "aproces", "rotas", "valūtu/naudas kolekcija", "bloknoti/piezīmjblociņi", "VR brilles", "Grafiskā karte", "SMU piemiņa", "tīrīšanas piederumi / salvetes", "trauciņš / zīmuļu turētājs", "alus josta"],
+      H: ["vasaras lasīšana", "mikrofoni", "baterijas", "vadi / lādētāji / adapteri", "powerbank", "peles", "klaviatūras", "rācijas", "samsung pulkstenis", "skrūves (mikrofonam)", "austiņas / audio vadi", "austiņu maciņš", "radio", "velo gaismiņas", "adapteri", "random lietas", "COVID tests", "tenisa bumbiņa", "instrukcijas", "filmiņu iepakojums", "rakstāmmašīnas lentes", "time-lapse taimeris"]
     };
 
     // Build an item→sections index (case-insensitive keys)
