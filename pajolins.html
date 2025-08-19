@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>33×33 Grid</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { display: grid; place-items: center; background: #fff; }
+    .board { width: 98vmin; height: 98vmin; }
+    table { width: 100%; height: 100%; border-collapse: collapse; table-layout: fixed; }
+    td {
+      border: 1px solid #cfcfd3;
+      text-align: center;
+      vertical-align: middle;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: clamp(10px, 1.6vmin, 18px);
+      padding: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+<body>
+  <div class="board">
+    <table id="grid" aria-label="33 by 33 grid"></table>
+  </div>
+
+  <script>
+    // Paste your 33x33 TAB-separated values here (exactly what you sent):
+    const TSV = `0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16\t17\t18\t19\t20\t21\t22\t23\t24\t25\t26\t27\t28\t29\t30\t31\t32
+1\tL\tE\tT\tE\tO\tP\tI\tD\tB\tH\tI\tD\tD\tS\tI\tL\tA\tV\tA\tH\tU\tP\tU\tR\tE\tS\tA\tA\tN\tD\tI\tS
+2\tO\tS\tU\tD\tD\tE\tN\tI\tR\tE\tV\tI\tZ\tI\tJ\tA\tS\tA\tT\tA\tM\tA\tN\tA\tL\tI\tG\tU\tM\tI\tJ\tA
+3\tT\tA\tT\tI\tK\t2\tG\tO\tE\tJ\tU\tT\tE\tK\tL\tE\t1\tI\tE\tL\tP\tU\tG\tU\tN\tS\tR\tC\t321\tZ\tH\t5
+4\tE\tM\tA\tE\tU\tR\tV\tI\tM\tE\tO\tI\tR\t456\tO\tN\tV\tK\tS\tO\tA\tK\tU\tG\tJ\tV\tI\tE\tN\tO\tT\tI
+5\t678\tI\tZ\tN\tR\tA\tE\tR\tZ\t471\tF\tT\tU\tA\tR\tG\tA\tS\tE\tG\tL\tJ\tR\tS\tR\tA\tS\tN\tI\tB\tR\tE
+6\tA\t3\tI\tI\tL\tI\tR\tI\tE\tK\tS\tT\tA\tL\tI\tN\tR\tA\tK\tE\tT\tU\tR\tN\tA\tR\tD\tI\t45\tI\tF\tR
+7\tZ\tM\tE\tS\tI\tK\tS\t72\tS\tS\tA\tU\tL\tE\tG\t90\tA\tI\tL\tN\tB\tA\tA\tL\tU\tM\tS\tA\tR\tG\tI\tE
+8\tI\tU\tD\tE\tD\tN\tE\tB\tE\tD\tA\tJ\tU\tT\tA\tI\tV\tA\tR\tA\tR\tA\tD\tI\tJ\tU\tM\tS\tK\tO\tZ\tH
+9\tM\tS\tO\tD\tM\tA\tR\tI\tN \tA\tD\tE\tT\tL\tE\tR\tI\tZ\tO\tS\tE\tR\tI\tT\tU\tM\tS\tI\tJ\tR\tF\tA
+10\tU\tK\tN\tB\tA\tG\tD\tA\tD\tE\tT\tG\tE\tP\tK\tA\tK\tJ\tZ\tA\tN\tE\tS\tA\tT\tI\tK\tS\tA\tN\tO\tS
+11\tT\tE\tI\tK\tS\tM\tA\t25\tE\tV\tB\tA\tR\tS\tO\tK\tS\tA\tE\tP\tT\tD\tS\tT\tE\tJ\tA\tT\tG\tI\tC\tA
+12\tS\tT\tS\tP\tI\t1\tP\tA\tR\tO\tL\tE\tI\tR\t123\tA\tN\tU\tS\tN\tG\tZ\tO\tO\tK\tA\tT\tE\tR\tJ\tE\tT
+13\tT\t1\tG\tR\tN\tK\tP\tP\tM\tD\tJ\tE\tZ\tL\tA\tS\tE\tS\tN\tI\tE\tV\tI\tS\tU\t1\tG\tN\tI\tA\tN\tE
+14\tD\tE\tR\tA\tA\tD\tI\tT\tE\tA\tE\t012\tA\tI\tL\tR\tU\tN\tA\tS\tA\tN\tA\tS\tK\t567\tU\tP\tS\tI\tT\tK
+15\tH\tR\tX\tN\tS\tE\tJ\tA\tN \tM\t8\tG\tC\tT\tE\tS\tL\tR\tN\tI\tP\tP\tL\tE\tO\tL\tI\tR\tO\tN\tI\tS
+16\tD\tI\tC\tK\tE\tN\tA\tR\tS\tA\tL\tO\tG\tE\tN\tA\tC\tI\tO\tN\tA\tL\tA\tR\tN\tW\tG\tI\tR\tI\tR\tE
+17\tP\tA\tR\tO\tL\tE\tS\tA\tE\tR\tI\tD\tE\tO\t123\tP\tX\tT\tT\tO\tL\tA\tP\tD\tK\t3\tP\tK\tO\tL\tA\tL
+18\tD\tR\tU\t345\tX\tA\tM\tU\tR\tI\tK\tS\tN\tO\tU\tN\tS\tE\tI\tN\tS\tN\tV\tE\tU\tW\tT\tO\tR\tZ\tZ\tE
+19\tK\tE\tC\tU\tP\tP\tI\tD\tZ\tZ\tA\tR\tI\tP\tO\tI\tD\tN\tS\tD\tA\tE\tI\tR\tR\tO\tI\tZ\tE\tI\tE\tN
+20\tU\tE\tA\tR\tG\tA\tN\tU\tI\tE\tN\tO\tJ\tS\tP\tA\tV\tI\tL\tA\tB\tT\tE\tR\tS\tE\tG\tE\tO\tR\tS\tC
+21\tR\tS\tV\tN\t\tR\tE\tL\tN \tS\tW\tN\tS\t2\tR\tR\tG\tS\t58\tC\tO\tA\tN\tM\tE\tD\tU\tS\tE\tG\tA\tE
+22\tJ\tT\tI\tA\t43\tD\tJ\tI\tS\tP\tR\tU\tN\tG\tA\tI\tN\tA\tV\tI\tL\tZ\tI\tP\tR\tU\tN\tA\tN\tS\tN\tY
+23\t123\tU\tZ\tU\tZ\tE\tU\tM\tA\tT\tL\tS\tO\tV\tA\tJ\tA\tI\tZ\tV\tA\tD\tB\tR\tU\tA\tI\tM\tG\tE\tA\tP
+24\tY\tD\tT\tG\tA\tY\tM\tE\tR\t420\tS\tK\tA\tI\tT\tA\tV\t8\t321\tI\tA\tS\tA\tA\tL\tR\tS\tI\tL\tT\tA\tS
+25\tT\tI\tE\tI\tC\tE\tS\tN\tI\tE\tG\tA\tS\tU\tA\tV\tE\tT\tR\tC\tN\tZ\tI\tT\tL\tG\tI\tB\tA\tN\tA\tV
+26\tC\tJ\tI\tM\tE\tG\t13\tI\tN \tk\tP\tA\tV\tA\tA\tR\tS\tT\tS\t10\tA\tI\tL\tK\tI\tE\tN\tA\tN\tR\tK\tE
+27\tK\tA\tO\tN\tR\tG\tI\tS\tU\tE\tL\tL\tE\t666\tR\tO\tE\tT\tA\tN\tL\tS\tE\tR\tS\tN\tE\tS\tE\tN\tC\tE
+28\tL\tS\tM\tA\tC\tO\tS\t1\tD\tI\tV\tI\tT\tR\tO\tI\tS\tT\tA\tI\tG\tA\tS\tI\tT\tG\t1\tE\tZ\tX\tI\tC
+29\tZ\tO\tI\tZ\tV\tE\tL\tE\tS\tA\tG\tJ\tE\tA\tK\tU\tK\tT\tP\tX\tI\tK\tG\tT\tE\tE\tN\tN\tI\tG\tT\tE
+30\tA\tM\tT\tI\tZ\tL\tA\tS\tV\tS\tO\tL\tI\tS\tA\tL\tS\tA\tE\tH\tN\tU\tR\t123\tR\tL\tH\tE\tN\tR\tI\tJ
+31\t678\tA\tE\tJ\tP\tA\tS\tS\tW\tO\tR\tD\tJ\tA\tS\tL\tI\tD\tS\tE\tS\tR\tI\tY\tI\tI\tK\tS\tU\tN\tS\t12
+32\tR\tL\tV\tA\tT\tL\tA\tS\tI\tT\tA\tJ\tS\tZ\tA\tA\tL\tE\tE\tN\t34\tU\tB\tL\tN\tO\tO\t69\tN\tE\tK\tO`;
+
+    const SIZE = 33; // expected width/height
+
+    const grid = document.getElementById('grid');
+    const rows = TSV.trim().split(/\r?\n/);
+
+    rows.forEach((line, rIdx) => {
+      const tr = document.createElement('tr');
+      // Split on TABs, keep empty cells if any
+      let cells = line.split('\t');
+      // Normalize row to exactly SIZE cells
+      if (cells.length < SIZE) cells = cells.concat(Array(SIZE - cells.length).fill(""));
+      if (cells.length > SIZE) cells = cells.slice(0, SIZE);
+
+      cells.forEach(text => {
+        const td = document.createElement('td');
+        td.textContent = text.trimEnd(); // preserve content, drop trailing spaces
+        tr.appendChild(td);
+      });
+      grid.appendChild(tr);
+    });
+
+    // Simple integrity check in console
+    if (rows.length !== SIZE) {
+      console.warn(`Expected ${SIZE} rows, got ${rows.length}`);
+    }
+  </script>
+</body>
+</html>
