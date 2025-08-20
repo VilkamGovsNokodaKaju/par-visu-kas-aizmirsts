@@ -23,12 +23,12 @@
   </style>
 </head>
 <body>
+<p>Dažkārt xXx()! mācības Abc! bremzē !yYy()! progresu !()!y-y-y!()!</p>
   <div class="board">
     <table id="grid" aria-label="33 by 33 grid"></table>
   </div>
 
   <script>
-    // Paste your 33x33 TAB-separated values here (exactly what you sent):
     const TSV = `0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\t16\t17\t18\t19\t20\t21\t22\t23\t24\t25\t26\t27\t28\t29\t30\t31\t32
 1\tL\tE\tT\tE\tO\tP\tI\tD\tB\tH\tI\tD\tD\tS\tI\tL\tA\tV\tA\tH\tU\tP\tU\tR\tE\tS\tA\tA\tN\tD\tI\tS
 2\tO\tS\tU\tD\tD\tE\tN\tI\tR\tE\tV\tI\tZ\tI\tJ\tA\tS\tA\tT\tA\tM\tA\tN\tA\tL\tI\tG\tU\tM\tI\tJ\tA
@@ -50,7 +50,7 @@
 18\tD\tR\tU\t345\tX\tA\tM\tU\tR\tI\tK\tS\tN\tO\tU\tN\tS\tE\tI\tN\tS\tN\tV\tE\tU\tW\tT\tO\tR\tZ\tZ\tE
 19\tK\tE\tC\tU\tP\tP\tI\tD\tZ\tZ\tA\tR\tI\tP\tO\tI\tD\tN\tS\tD\tA\tE\tI\tR\tR\tO\tI\tZ\tE\tI\tE\tN
 20\tU\tE\tA\tR\tG\tA\tN\tU\tI\tE\tN\tO\tJ\tS\tP\tA\tV\tI\tL\tA\tB\tT\tE\tR\tS\tE\tG\tE\tO\tR\tS\tC
-21\tR\tS\tV\tN\t\tR\tE\tL\tN \tS\tW\tN\tS\t2\tR\tR\tG\tS\t58\tC\tO\tA\tN\tM\tE\tD\tU\tS\tE\tG\tA\tE
+21\tR\tS\tV\tN\tO\tR\tE\tL\tN \tS\tW\tN\tS\t2\tR\tR\tG\tS\t58\tC\tO\tA\tN\tM\tE\tD\tU\tS\tE\tG\tA\tE
 22\tJ\tT\tI\tA\t43\tD\tJ\tI\tS\tP\tR\tU\tN\tG\tA\tI\tN\tA\tV\tI\tL\tZ\tI\tP\tR\tU\tN\tA\tN\tS\tN\tY
 23\t123\tU\tZ\tU\tZ\tE\tU\tM\tA\tT\tL\tS\tO\tV\tA\tJ\tA\tI\tZ\tV\tA\tD\tB\tR\tU\tA\tI\tM\tG\tE\tA\tP
 24\tY\tD\tT\tG\tA\tY\tM\tE\tR\t420\tS\tK\tA\tI\tT\tA\tV\t8\t321\tI\tA\tS\tA\tA\tL\tR\tS\tI\tL\tT\tA\tS
@@ -63,28 +63,25 @@
 31\t678\tA\tE\tJ\tP\tA\tS\tS\tW\tO\tR\tD\tJ\tA\tS\tL\tI\tD\tS\tE\tS\tR\tI\tY\tI\tI\tK\tS\tU\tN\tS\t12
 32\tR\tL\tV\tA\tT\tL\tA\tS\tI\tT\tA\tJ\tS\tZ\tA\tA\tL\tE\tE\tN\t34\tU\tB\tL\tN\tO\tO\t69\tN\tE\tK\tO`;
 
-    const SIZE = 33; // expected width/height
+    const SIZE = 33;
 
     const grid = document.getElementById('grid');
     const rows = TSV.trim().split(/\r?\n/);
 
     rows.forEach((line, rIdx) => {
       const tr = document.createElement('tr');
-      // Split on TABs, keep empty cells if any
       let cells = line.split('\t');
-      // Normalize row to exactly SIZE cells
       if (cells.length < SIZE) cells = cells.concat(Array(SIZE - cells.length).fill(""));
       if (cells.length > SIZE) cells = cells.slice(0, SIZE);
 
       cells.forEach(text => {
         const td = document.createElement('td');
-        td.textContent = text.trimEnd(); // preserve content, drop trailing spaces
+        td.textContent = text.trimEnd();
         tr.appendChild(td);
       });
       grid.appendChild(tr);
     });
 
-    // Simple integrity check in console
     if (rows.length !== SIZE) {
       console.warn(`Expected ${SIZE} rows, got ${rows.length}`);
     }
